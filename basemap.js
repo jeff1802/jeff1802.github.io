@@ -60,4 +60,16 @@ bmapothofoto30cm : L.tileLayer
 
 
 myMap.addLayer(myLayers.bmapgrau);
+let myMapControl= L.control.layers({
+    "Openstreetmap":myLayers.osm, 
+    "Geoland Basemap":myLayers.geolandbasemap, 
+    "Overlay":myLayers.bmapoverlay, 
+    "Grau":myLayers.bmapgrau, 
+    "HIDDPI": myLayers.bmaphidpi, 
+    "Orthophoto": myLayers.bmapothofoto30cm },
+                                  {
+    "basemap.at Overlay": myLayers.bmapoverlay
+})
+myMap.addControl(myMapControl);
 myMap.setView([47.267,11.383], 11);
+
