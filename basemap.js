@@ -1,12 +1,14 @@
 
-let myMap = L.map("mapdiv");
+let myMap = L.map("mapdiv"); //http://leafletjs.com/reference-1.3.0.html#map-l-map
 let myLayers = {
 
-osm : L.tileLayer
+osm : L.tileLayer//http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
 ("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
 
 geolandbasemap : L.tileLayer
-("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", {subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"], attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"} ),
+("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", 
+ {subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"], //http://leafletjs.com/reference-1.3.0.html#tilelayer-subdomains
+  attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"} ),//http://leafletjs.com/reference-1.3.0.html#layer-attribution
     
 bmapoverlay : L.tileLayer
 ("https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png", {subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"], attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"}),
@@ -59,8 +61,9 @@ bmapothofoto30cm : L.tileLayer
 //myLayer=L.tileLayer("https://maps.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg")
 
 
-myMap.addLayer(myLayers.bmapgrau);
-let myMapControl= L.control.layers({
+myMap.addLayer(myLayers.bmapgrau);//http://leafletjs.com/reference-1.3.0.html#map-addlayer
+
+let myMapControl= L.control.layers({//http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
     "Openstreetmap":myLayers.osm, 
     "Geoland Basemap":myLayers.geolandbasemap, 
     "Overlay":myLayers.bmapoverlay, 
@@ -70,6 +73,8 @@ let myMapControl= L.control.layers({
                                   {
     "basemap.at Overlay": myLayers.bmapoverlay
 })
-myMap.addControl(myMapControl);
-myMap.setView([47.267,11.383], 11);
+myMap.addControl(myMapControl);//http://leafletjs.com/reference-1.3.0.html#map-addcontrol
+
+myMap.setView([47.267,11.383], 11);//http://leafletjs.com/reference-1.3.0.html#map-setview
+
 
