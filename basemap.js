@@ -3,7 +3,9 @@ let myMap = L.map("mapdiv"); //http://leafletjs.com/reference-1.3.0.html#map-l-m
 let myLayers = {
 
 osm : L.tileLayer//http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
-("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"),
+("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+{subdomains : ["a", "b", "c"], 
+        attribution : "Datenquelle: <a href='https://www.openstreetmap.org'>© OpenStreetMap-Mitwirkende</a>"}),
 
 geolandbasemap : L.tileLayer
 ("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", 
@@ -73,15 +75,15 @@ let myMapControl= L.control.layers({//http://leafletjs.com/reference-1.3.0.html#
                                   {
     "basemap.at Overlay": myLayers.bmapoverlay,
 },
-{collapsed:false}
-                                  )
+{collapsed:false}//http:leafletjs.com/reference-1.3.0.html#control-layers-collapsed
+)
 
 myMap.addControl(myMapControl);//http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 
 myMap.setView([47.267,11.383], 11);//http://leafletjs.com/reference-1.3.0.html#map-setview
 
 
-L.control.scale( {
-    maxWidth:200,
-    imperial: false
-    }).addTo(myMap);//http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
+L.control.scale( {//http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
+    maxWidth:200,//http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+    imperial: false //http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
+    }).addTo(myMap);
