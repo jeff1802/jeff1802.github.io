@@ -69,12 +69,16 @@ let myMapControl= L.control.layers({//http://leafletjs.com/reference-1.3.0.html#
     "Overlay":myLayers.bmapoverlay, 
     "Grau":myLayers.bmapgrau, 
     "HIDDPI": myLayers.bmaphidpi, 
-    "Orthophoto": myLayers.bmapothofoto30cm },
+    "Orthophoto": myLayers.bmapothofoto30cm},
                                   {
     "basemap.at Overlay": myLayers.bmapoverlay
-})
+} )
 myMap.addControl(myMapControl);//http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 
 myMap.setView([47.267,11.383], 11);//http://leafletjs.com/reference-1.3.0.html#map-setview
 
 
+L.control.scale( {
+    maxWidth:200,
+    imperial: false
+    }).addTo(myMap);//http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
