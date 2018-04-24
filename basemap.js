@@ -71,8 +71,11 @@ let myMapControl= L.control.layers({//http://leafletjs.com/reference-1.3.0.html#
     "HIDDPI": myLayers.bmaphidpi, 
     "Orthophoto": myLayers.bmapothofoto30cm},
                                   {
-    "basemap.at Overlay": myLayers.bmapoverlay
-} )
+    "basemap.at Overlay": myLayers.bmapoverlay,
+},
+{collapsed:false}
+                                  )
+
 myMap.addControl(myMapControl);//http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 
 myMap.setView([47.267,11.383], 11);//http://leafletjs.com/reference-1.3.0.html#map-setview
