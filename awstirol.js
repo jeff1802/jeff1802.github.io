@@ -89,3 +89,5 @@ for (const entry of awsdata) {
 <p> Datum: ${entry.datum}  </p> 
 <a href="${entry.link}">Grafik</a>`)/*Daniel Suttor*/
 }
+
+/*L.marker(["A1";...])*/
