@@ -1,7 +1,7 @@
-let myMap = L.map("mapdiv"); // http://leafletjs.com/reference-1.3.0.html#map-l-map
+let myMap = L.map("mapdiv"); 
 const wienGroup = L.featureGroup();
 myLayers = {
-    osm : L.tileLayer ( // http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
+    osm : L.tileLayer (
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
         {
         attribution : "Datenquelle: <a href='https://www.openstreetmap.org' >Openstreepmap.com</a>"
@@ -10,8 +10,8 @@ myLayers = {
 
     geolandbasemap : L.tileLayer (
         "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],                        // http://leafletjs.com/reference-1.3.0.html#tilelayer-subdomains
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"   // http://leafletjs.com/reference-1.3.0.html#layer-attribution
+        { subdomains : ["maps","maps1","maps2","maps3","maps4"],                       
+        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"   
     }
     ),
 
@@ -42,34 +42,34 @@ myLayers = {
 
 };
 
-myMap.addLayer(myLayers.geolandbasemap); // http://leafletjs.com/reference-1.3.0.html#map-addlayer
+myMap.addLayer(myLayers.geolandbasemap); 
 
-let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
+let myMapControl = L.control.layers({  
     "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
     "Basemap.at (Grau)" : myLayers.bmapgrau,
-    "Basemap.at (highdpi)" : myLayers.bmaphidpi,
+        "Basemap.at (highdpi)" : myLayers.bmaphidpi,
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,
 
 },{"Basemap overlay" : myLayers.bmapoverlay,
     "To-Do-Wien" : wienGroup
 },
-{collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
+{collapsed:false  
 }
 );
 
 
 
-myMap.addControl (myMapControl); // http://leafletjs.com/reference-1.3.0.html#map-addcontrol
+myMap.addControl (myMapControl); 
 
 
 /*myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview*/
 
-L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
-{imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
-maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+L.control.scale( 
+{imperial: false, 
+maxWidth:200 
 }
-// metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
+
 ).addTo(myMap);
 
 async function addGeojson(url) {
@@ -93,7 +93,7 @@ async function addGeojson(url) {
     });
     wienGroup.addLayer(geojson);
     myMap.fitBounds(wienGroup.getBounds())
-    }
+}
 // console.log("Stationen: ", stationen);
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
