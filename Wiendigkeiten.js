@@ -52,7 +52,7 @@ let myMapControl = L.control.layers({
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,
 
 },{"Basemap overlay" : myLayers.bmapoverlay,
-    "To-Do-Wien" : wienGroup
+    "Sehenswürdigkeiten" : wienGroup
 },
 {collapsed:false  
 }
@@ -84,20 +84,22 @@ async function addGeojson(url) {
         pointToLayer:function(geoJsonPoint, latlng) {
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl:"rockhouse.png"
+                    iconUrl:"sight-2.png"
                 })
             })
         }
         
     });
     wienGroup.addLayer(geojson);
-    myMap.fitBounds(wienGroup.getBounds())
+    myMap.fitBounds(wienGroup.getBounds()
+      )
 }
 
 
-const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:SEHENSWUERDIGOGD&srsName=EPSG:4326&outputFormat=json"
 
 addGeojson(url);
+
 
 myMap.addLayer(wienGroup);
 

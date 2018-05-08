@@ -52,7 +52,7 @@ let myMapControl = L.control.layers({
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,
 
 },{"Basemap overlay" : myLayers.bmapoverlay,
-    "To-Do-Wien" : wienGroup
+    "Fahrradausleihstation" : wienGroup
 },
 {collapsed:false  
 }
@@ -85,7 +85,7 @@ async function addGeojson(url) {
         pointToLayer:function(geoJsonPoint, latlng) {
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl:"rockhouse.png"
+                    iconUrl:"cycling.png"
                 })
             })
         }
@@ -96,7 +96,7 @@ async function addGeojson(url) {
 }
 // console.log("Stationen: ", stationen);
 
-const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
 
 addGeojson(url);
 
