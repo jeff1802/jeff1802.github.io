@@ -1,12 +1,6 @@
 let myMap = L.map("mapdiv"); 
 const wienGroup = L.featureGroup();
 myLayers = {
-    osm : L.tileLayer ( 
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-        attribution : "Datenquelle: <a href='https://www.openstreetmap.org' >Openstreepmap.com</a>"
-    }
-    ),
 
     geolandbasemap : L.tileLayer (
         "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
@@ -45,7 +39,6 @@ myLayers = {
 myMap.addLayer(myLayers.geolandbasemap); 
 
 let myMapControl = L.control.layers({  
-    "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
     "Basemap.at (Grau)" : myLayers.bmapgrau,
         "Basemap.at (highdpi)" : myLayers.bmaphidpi,
@@ -53,8 +46,6 @@ let myMapControl = L.control.layers({
 
 },{"Basemap overlay" : myLayers.bmapoverlay,
     "Sehenswürdigkeiten" : wienGroup
-},
-{collapsed:false  
 }
 );
 
@@ -90,9 +81,16 @@ async function addGeojson(url) {
         }
         
     });
+    
+    geojson.bindPopup(function(layer) {
+    const props = layer.feature.properties;
+    const popupText = `<h1>${props.NAME}</h1>
+        <p>Adresse: ${props.ADRESSE}</p>
+        <p>${props.WEITERE_INF}</p>`;
+    return popupText;
+      })
     wienGroup.addLayer(geojson);
-    myMap.fitBounds(wienGroup.getBounds()
-      )
+    myMap.fitBounds(wienGroup.getBounds())
 }
 
 

@@ -1,12 +1,7 @@
 let myMap = L.map("mapdiv"); 
 const wienGroup = L.featureGroup();
 myLayers = {
-    osm : L.tileLayer (
-        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-        {
-        attribution : "Datenquelle: <a href='https://www.openstreetmap.org' >Openstreepmap.com</a>"
-    }
-    ),
+
 
     geolandbasemap : L.tileLayer (
         "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
@@ -45,17 +40,15 @@ myLayers = {
 myMap.addLayer(myLayers.geolandbasemap); 
 
 let myMapControl = L.control.layers({  
-    "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
     "Basemap.at (Grau)" : myLayers.bmapgrau,
         "Basemap.at (highdpi)" : myLayers.bmaphidpi,
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,
 
 },{"Basemap overlay" : myLayers.bmapoverlay,
-    "Fahrradausleihstation" : wienGroup
-},
-{collapsed:false  
+    "Station" : wienGroup
 }
+
 );
 
 
@@ -89,11 +82,18 @@ async function addGeojson(url) {
                 })
             })
         }
-        
     });
+        
+    geojson.bindPopup(function(layer) {
+    const props = layer.feature.properties;
+    const popupText = `<h2>${props.STATION}</h2>`;
+    return popupText;
+      })
     wienGroup.addLayer(geojson);
     myMap.fitBounds(wienGroup.getBounds())
 }
+
+
 // console.log("Stationen: ", stationen);
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
