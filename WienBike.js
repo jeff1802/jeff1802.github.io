@@ -1,97 +1,119 @@
-let myMap = L.map("mapdiv"); 
+let myMap = L.map("mapdiv");
 const wienGroup = L.featureGroup();
+var searchLayer = L.layerGroup().addTo(myMap);
 myLayers = {
 
 
-    geolandbasemap : L.tileLayer (
+    geolandbasemap: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],                       
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"   
-    }
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        }
     ),
 
-    bmapgrau: L.tileLayer (
+    bmapgrau: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/bmapgrau/normal/google3857/{z}/{y}/{x}.png",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
-    }
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        }
     ),
-    bmaporthofoto30cm:  L.tileLayer (
+    bmaporthofoto30cm: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/bmaporthofoto30cm/normal/google3857/{z}/{y}/{x}.jpeg",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
-    }
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        }
     ),
-    bmapoverlay: L.tileLayer (
+    bmapoverlay: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/bmapoverlay/normal/google3857/{z}/{y}/{x}.png",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
-    }
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        }
     ),
-    bmaphidpi: L.tileLayer (
+    bmaphidpi: L.tileLayer(
         "https://{s}.wien.gv.at/basemap/bmaphidpi/normal/google3857/{z}/{y}/{x}.jpeg",
-        { subdomains : ["maps","maps1","maps2","maps3","maps4"],
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
-    }
+        {
+            subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
+            attribution: "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        }
     )
 
 };
 
-myMap.addLayer(myLayers.geolandbasemap); 
+myMap.addLayer(myLayers.geolandbasemap);
 
-let myMapControl = L.control.layers({  
-    "Basemap.at" : myLayers.geolandbasemap,
-    "Basemap.at (Grau)" : myLayers.bmapgrau,
-        "Basemap.at (highdpi)" : myLayers.bmaphidpi,
-    "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,
+let myMapControl = L.control.layers({
+    "Basemap.at": myLayers.geolandbasemap,
+    "Basemap.at (Grau)": myLayers.bmapgrau,
+    "Basemap.at (highdpi)": myLayers.bmaphidpi,
+    "Orthophoto 30cm": myLayers.bmaporthofoto30cm,
 
-},{"Basemap overlay" : myLayers.bmapoverlay,
-    "Station" : wienGroup
-}
+}, {
+    "Basemap overlay": myLayers.bmapoverlay,
+        "Station": wienGroup
+
+
+    }
 
 );
 
 
 
-myMap.addControl (myMapControl); 
+myMap.addControl(myMapControl);
 
 
 /*myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview*/
 
-L.control.scale( 
-{imperial: false, 
-maxWidth:200 
-}
+L.control.scale(
+    {
+        imperial: false,
+        maxWidth: 200
+    }
 
 ).addTo(myMap);
 
 async function addGeojson(url) {
-   
-    const response =await fetch(url);
- 
+
+    const response = await fetch(url);
+
     const wiendata = await response.json();
 
-    const geojson = L.geoJSON(wiendata,{
-        style: function(feature){
-        return{color: "#ff0000"}
-    },
-        pointToLayer:function(geoJsonPoint, latlng) {
+    const geojson = L.geoJSON(wiendata, {
+        style: function (feature) {
+            return { color: "#ff0000" }
+        },
+        pointToLayer: function (geoJsonPoint, latlng) {
             return L.marker(latlng, {
                 icon: L.icon({
-                    iconUrl:"cycling.png"
+                    iconUrl: "cycling.png"
                 })
             })
         }
     });
-        
-    geojson.bindPopup(function(layer) {
-    const props = layer.feature.properties;
-    const popupText = `<h2>${props.STATION}</h2>`;
-    return popupText;
-      })
+
+    geojson.bindPopup(function (layer) {
+        const props = layer.feature.properties;
+        const popupText = `<h2>${props.STATION}</h2>`;
+        return popupText;
+    });
+
     wienGroup.addLayer(geojson);
-    myMap.fitBounds(wienGroup.getBounds())
-}
+    myMap.fitBounds(wienGroup.getBounds());
+    var hash = new L.Hash(myMap);
+
+    var marker = L.markerClusterGroup();
+    marker.addLayer(geojson);
+    myMap.addLayer(marker);
+
+    myMap.addControl(new L.Control.Search({
+        layer: wienGroup,
+        propertyName: `STATION`
+    }));
+
+};
 
 
 // console.log("Stationen: ", stationen);
