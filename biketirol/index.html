@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bike Trail Tirol - Etappe XX</title><!-- TODO: Etappentitel einfügen -->
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    
+    <link rel="stylesheet" href="../js/leaflet/leaflet.css" />
+    <script src="../js/leaflet/leaflet.js"></script>
+
+    <link rel="stylesheet" href="styles.css" />
+    <script defer src="biketirol.js"></script>
+
+</head>
+
+<body>
+    <div id="header">
+        <h2 class="white">Bike Trail Tirol</h2>
+        <h3 class="white">Griass enk die Wadeln!</h3>
+    </div>
+
+    <div class="author">
+        <img src="images/user.jpg" alt="Ihr Reiseleiter" /><!-- TODO: anpassen -->
+        <p class="gray">
+            <a href="mailto:jeff.reding@student.uibk.ac.at">Jeff Reding</a> 
+            <a href="https://jeff1802.github.io/biketirol/index.html">https://jeff1802.github.io/biketirol/</a>
+        </p>
+    </div>
+
+    <hr />
+
+    
+    <div class="article">
+        <h1>Etappe 24 von Mutters nach Sellrain</h1>
+
+        <p>TODO: Kurzinfo zur Strecke aus Online Beschreibung (=kursiver Text oberhalb der Karte) https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren?form=biketours&theme[]=1</p>
+
+        TODO: Karte mit Radroute und Marker beim Start- und Endpunkt. Hintergrundkarte OSM, basemap.at und Elektronische Karte Tirol (Sommer, Winter, Orthophoto jeweils mit Beschriftung) - siehe biketirol.js
+        <div id="map"></div>
+
+        <h2>Streckenbeschreibung</h2>
+        <p>Von Mutters radelt man auf der Straße Richtung Götzens. Erst durchquert man Neu Götzens, ehe man nach Götzens gelangt. Hier ist auch die einzige Abzweigung, die man vielleicht verpassen könnte. 150 Meter vor der Kirche muss man nämlich links Richtung Götzner Alm abzweigen, um dann gleich wieder rechts auf Nebenwegen nach Axams zu fahren (1 Stunde ab Mutters). Beim Kreisverkehr am westlichen Ortsrand nimmt man die Abzweigung nach Grinzens. Immer auf der Hauptstraße geht es durch Grinzens und auf einer etwas schmaleren Asphaltstraße bis ins Etappenziel nach Sellrain (1 Stunde ab Axams).
+
+            Info: Diese Strecke ist eine Verbindungsetappe. Wer eine kürzere Bike Trail Tirol Runde fahren möchte, kann von Axams nach Kematen abfahren, hier den Inntal Radweg nach Telfs nehmen und über Sagl, Buchen nach Leutasch und Scharnitz radeln, was die große Runde um ein bis zwei Tage verkürzt. Eine weitere Möglichkeit besteht darin, über die Flaurlinger Alm nach Telfs zu radeln.</p>
+
+        <h3>Links</h3>
+         <ul>
+            <li>
+                <a href="https://www.tirol.at/reisefuehrer/sport/radfahren/biketouren/a-bike-trail-tirol-mutters-sellrain">Streckenbeschreibung </a>
+            </li>
+            <li>
+                <a href="https://www.innsbruck.info/regionen/westliche-feriendoerfer/mutters-natters/unterkuenfte-in-mutters-natters.html">Unterkünfte Mutters</a>
+            </li>
+            <li>
+                <a href="https://www.innsbruck.info/regionen/kuehtai-sellraintal.html">Info: Kühtai - Sellraintal</a>
+            </li>
+            <li>
+                <a href="https://www.innsbruck.info/regionen/kuehtai-sellraintal/unterkuenfte.html">Unterkünfte Kühtai - Sellraintal</a>
+            </li>
+        </ul>
+    </div>
+
+    <hr />
+
+    <!-- TODO: Links anpassen zu den benachbarten Etappen - siehe OLAT Tabelle ... -->
+    <div id="footer" class="gray">
+        <a class="back" href="../23/index.html">
+            <i class="fas fa-arrow-alt-circle-left"></i> vorhergehender Stop</a>
+        <a class="next" href="../25/index.html">nächster Stop
+            <i class="fas fa-arrow-alt-circle-right"></i>
+        </a>
+    </div>
+
+</body>
+</html>
