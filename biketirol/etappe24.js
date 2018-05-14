@@ -1,4 +1,6 @@
-let myMap = L.map("mapdiv");
+
+const RouteGroup=L.featureGroup();
+const routemarkerGroup=L.featureGroup(); 
 let myLayers = {
 
     osm : L.tileLayer
@@ -29,7 +31,9 @@ let myLayers = {
     })
 };
 
-myMap.addLayer(myLayers.geolandbasemap);
+let myMap = L.map("map",{ layers: [myLayers.geolandbasemap]
+   });
+
 
 let myMapControl= L.control.layers({
     "Openstreetmap":myLayers.osm, 
@@ -38,17 +42,29 @@ let myMapControl= L.control.layers({
     "Karte Winter":myLayers.eKarte_winter,
     "Orthophoto":myLayers.eKarte_ortho,
 },
-{
-    "basemap.at Overlay": myLayers.bmapoverlay,
-},
+{"Route": RouteGroup,
+"Start/Ziel": routemarkerGroup},
 {
     collapsed:false
 }
-)
+
+);
+
+myMap.addControl (myMapControl); 
 
 L.control.scale( {
     maxWidth:200,
     imperial: false 
     }).addTo(myMap);
 
+let geojson = L.geoJSON(bikeRoute).addTo(RouteGroup);
+RouteGroup.addLayer(geojson);
+
+myMap.fitBounds(RouteGroup.getBounds());
+
+myMap.addLayer(RouteGroup);
+
+L.marker([11.375286,47.227466]).addTo(routemarkerGroup);
+L.marker([11.213361,47.213184]).addTo(routemarkerGroup);
+myMap.addLayer(routemarkerGroup);
 
