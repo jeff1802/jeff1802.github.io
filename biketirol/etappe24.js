@@ -31,7 +31,9 @@ let myLayers = {
     })
 };
 
-let myMap = L.map("map",{ layers: [myLayers.geolandbasemap]
+let myMap = L.map("map",{ 
+    layers: [myLayers.geolandbasemap],
+    fullscreenControl: true,
    });
 
 
@@ -57,10 +59,33 @@ L.control.scale( {
     imperial: false 
     }).addTo(myMap);
 
-let geojson = L.geoJSON(bikeRoute).addTo(RouteGroup);
-RouteGroup.addLayer(geojson);
+    //Alternative
+//let geojson = L.geoJSON(bikeRoute).addTo(RouteGroup);
+//RouteGroup.addLayer(geojson);
+//myMap.fitBounds(RouteGroup.getBounds());
 
-myMap.fitBounds(RouteGroup.getBounds());
+
+//Hilfe zu Erstellung 
+/*var gpx = '...'; // URL to your GPX file or the GPX itself
+new L.GPX(gpx, 
+    {async: true}).on('loaded', function(e) {
+  map.fitBounds(e.target.getBounds());
+}).addTo(map);*/
+
+let gpxTrack = new L.GPX("data/etappe24.gpx", {
+    async:true,
+}).addTo(RouteGroup);
+gpxTrack.on(`loaded`,function(evt){
+    console.log(evt.target.get_distance().toFixed(0))
+    console.log(evt.target.get_elevation_min().toFixed(0))
+    console.log(evt.target.get_elevation_max().toFixed(0))
+    console.log(evt.target.get_elevation_gain().toFixed(0))
+    console.log(evt.target.get_elevation_loss().toFixed(0))
+    let laenge = evt.target.get_distance().toFixed(0);
+    document.getElementById("laenge").innerHTML=laenge;
+
+    myMap.fitBounds(evt.target.getBounds())
+})
 
 myMap.addLayer(RouteGroup);
 
