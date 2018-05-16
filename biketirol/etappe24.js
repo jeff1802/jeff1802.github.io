@@ -64,7 +64,18 @@ myMap.fitBounds(RouteGroup.getBounds());
 
 myMap.addLayer(RouteGroup);
 
-L.marker([11.375286,47.227466]).addTo(routemarkerGroup);
-L.marker([11.213361,47.213184]).addTo(routemarkerGroup);
+L.marker([47.227466,11.375286], {icon: L.icon({
+    iconUrl:"start-race-2.png",
+    iconAnchor: [12,35],
+    popupAnchor:[0,-35]})
+}).bindPopup("<a href='http://www.mutters.at'>Mutters</a>").addTo(routemarkerGroup);
+L.marker([47.213184,11.213361], {icon: L.icon({
+    iconUrl:"finish2.png",
+    iconAnchor:[20,35],
+    popupAnchor: [0,-35]})
+}).bindPopup("<a href='https://de.wikipedia.org/wiki/Sellraintal'>Sellraintal</a>").addTo(routemarkerGroup);
 myMap.addLayer(routemarkerGroup);
 
+routemarkerGroup.addTo(myMap);
+
+//myMap.fitBounds(routemarkerGroup.getBounds());
