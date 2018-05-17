@@ -1,4 +1,7 @@
 
+let myMap = L.map("map",{ 
+    fullscreenControl: true,
+   });
 const RouteGroup=L.featureGroup();
 const routemarkerGroup=L.featureGroup(); 
 let myLayers = {
@@ -31,11 +34,7 @@ let myLayers = {
     })
 };
 
-let myMap = L.map("map",{ 
-    layers: [myLayers.geolandbasemap],
-    fullscreenControl: true,
-   });
-
+myMap.addLayer(myLayers.geolandbasemap); 
 
 let myMapControl= L.control.layers({
     "Openstreetmap":myLayers.osm, 
