@@ -65,63 +65,75 @@ L.control.scale({
 }).addTo(karte);
 
 // asynchrone Funktion zum Laden eines GeoJSON Layers
-async function ladeGeojsonLayer(datenAttribute) {
-    const response = await fetch(datenAttribute.json);
-
+async function ladeGeojsonLayer(datenObjekt) {
+    const response = await fetch(datenObjekt.json);
     const response_json = await response.json();
-
 
     // GeoJSON Geometrien hinzufügen und auf Ausschnitt zoomen
     const geojsonObjekt = L.geoJSON(response_json, {
-    onEachFeature: function(feature,layer){
-      //  console.log(feature.properties)
-      let popup = "<h3> Attribute </h3>";
-        for (attribut in feature.properties) {
-            let wert = feature.properties[attribut]
-            if (wert && wert.toString().startsWith("http:")) {
-                popup += `${attribut}: <a href=${wert}
-                >Weblink</a>`;
+        onEachFeature : function(feature,layer) {
+            // Popup mit allen Properties und maximal 600 Pixel Breite hinzufügen
+            let popup = "<h3>Attribute</h3>";
+            for (attribut in feature.properties) {
+                let wert = feature.properties[attribut];
+                if (wert && wert.toString().startsWith("http:")) {
+                    // Hyperlink zur angegebenen URL erzeugen
+                    popup += `${attribut}: <a href="${wert}">Weblink</a><br/>`;
+                } else {
+                    // Attribut und Wert ohne Verlinkung anzeigen
+                    popup += `${attribut}: ${wert}<br/>`;
+                }
+            }
+            layer.bindPopup(popup, {
+                maxWidth : 600,
+            });
+        },
+        pointToLayer : function(geoJsonPoint, latlng) {
+            if (datenObjekt.icon) {
+                return L.marker(latlng, {
+                    icon : L.icon({
+                        iconUrl : datenObjekt.icon,
+                        iconAnchor : [16,32],
+                        popupAnchor : [0,-32],
+                    })
+                })
             } else {
-           // console.log(attribut,feature.properties[attribut] )
-            popup += `${attribut}: ${wert} </br>`;
+                return L.marker(latlng);
+            }
         }
-        }
-      //  console.log(popup)
-        layer.bindPopup(popup, {
-            maxWidth : 600,
-        });
-    }
     });
     geojsonGruppe.addLayer(geojsonObjekt);
     karte.fitBounds(geojsonGruppe.getBounds());
 }
 
-wienDatensaetze.sort(function(a,b){
+// Datenobjekt vor dem Erzeugen des Menüs alphabetisch nach dem Titel sortieren
+wienDatensaetze.sort(function(a,b) {
     if (a.titel < b.titel) {
         return -1;
     } else if (a.titel > b.titel) {
         return 1;
-        } else {
-            return 0;
-        }
+    } else {
+        return 0;
+    }
 })
 
+// den GeoJSON Layer für den ersten Datensatz laden
+let datenObjekt = wienDatensaetze[0];
+ladeGeojsonLayer(datenObjekt);
 
-
-// den GeoJSON Layer für Grillplätze laden
-ladeGeojsonLayer(wienDatensaetze[0]);
-
+// Pulldown Menü erzeugen
 let layerAuswahl = document.getElementById("layerAuswahl");
-for (let i=0; i<wienDatensaetze.length; i++) {
-    layerAuswahl.innerHTML += `<option value ="${i}">${wienDatensaetze[i].titel}</option>`
-   // console.log(i, wienDatensaetze[i].titel)
+for (let i = 0; i < wienDatensaetze.length; i++) {
+    let datenObjekt = wienDatensaetze[i] // der "ganze Koffer" ;-)
+    let datenPosition = i;
+    layerAuswahl.innerHTML += `<option value="${datenPosition}">${datenObjekt.titel}</option>`
+    //console.log(datenObjekt)
 }
 
-layerAuswahl.onchange = function(evt){
+// auf Änderungen im Pulldown Menü reagieren und neue Daten laden
+layerAuswahl.onchange = function(evt) {
     geojsonGruppe.clearLayers();
-    let i = evt.target.value;
-    console.log(i, wienDatensaetze[i])
-    ladeGeojsonLayer(wienDatensaetze[i]);
+    let datenPosition = evt.target.value;
+    let datenObjekt = wienDatensaetze[datenPosition];
+    ladeGeojsonLayer(datenObjekt);
 }
-
-console.log(wienDatensaetze)
