@@ -110,6 +110,6 @@ L.marker([47.213184,11.213361], {icon: L.icon({
 
 myMap.addLayer(routemarkerGroup);
 
-//routemarkerGroup.addTo(myMap);
+routemarkerGroup.addTo(myMap);
 
 //myMap.fitBounds(routemarkerGroup.getBounds());
