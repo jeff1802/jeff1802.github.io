@@ -1,47 +1,47 @@
 
-let myMap = L.map("map",{ 
-    fullscreenControl: true,
+let myMap = L.map("map",{
+    fullscreenControl: true
    });
 const RouteGroup=L.featureGroup();
-const routemarkerGroup=L.featureGroup(); 
+const routemarkerGroup=L.featureGroup();
 let myLayers = {
 
     osm : L.tileLayer
     ("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-    {subdomains : ["a", "b", "c"], 
+    {subdomains : ["a", "b", "c"],
     attribution : "Datenquelle: <a href='https://www.openstreetmap.org'>© OpenStreetMap-Mitwirkende</a>"
     }),
-    
+
     geolandbasemap : L.tileLayer
-    ("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png", 
+    ("https://{s}.wien.gv.at/basemap/geolandbasemap/normal/google3857/{z}/{y}/{x}.png",
      {subdomains: ["maps", "maps1", "maps2", "maps3", "maps4"],
       attribution: "Datenquelle: <a href='https://www.basemap.at'>basemap.at</a>"
     }),
 
-    eKarte_sommer: L.tileLayer 
+    eKarte_sommer: L.tileLayer
     ("http://wmts.kartetirol.at/wmts/gdi_summer/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
     {attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     }),
 
-    eKarte_winter:  L.tileLayer 
+    eKarte_winter:  L.tileLayer
     ("http://wmts.kartetirol.at/wmts/gdi_winter/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
     {attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     }),
 
-    eKarte_ortho: L.tileLayer 
+    eKarte_ortho: L.tileLayer
     ("http://wmts.kartetirol.at/wmts/gdi_ortho/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
     {attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     })
 };
 
-myMap.addLayer(myLayers.geolandbasemap); 
+myMap.addLayer(myLayers.geolandbasemap);
 
 let myMapControl= L.control.layers({
-    "Openstreetmap":myLayers.osm, 
-    "Geoland Basemap":myLayers.geolandbasemap, 
+    "Openstreetmap":myLayers.osm,
+    "Geoland Basemap":myLayers.geolandbasemap,
     "Karte Sommer":myLayers.eKarte_sommer,
     "Karte Winter":myLayers.eKarte_winter,
-    "Orthophoto":myLayers.eKarte_ortho,
+    "Orthophoto":myLayers.eKarte_ortho
 },
 {"Route": RouteGroup,
 "Start/Ziel": routemarkerGroup},
@@ -51,11 +51,11 @@ let myMapControl= L.control.layers({
 
 );
 
-myMap.addControl (myMapControl); 
+myMap.addControl (myMapControl);
 
 L.control.scale( {
     maxWidth:200,
-    imperial: false 
+    imperial: false
     }).addTo(myMap);
 
     //Alternative
@@ -72,7 +72,7 @@ new L.GPX(gpx,
 }).addTo(map);*/
 
 let gpxTrack = new L.GPX("data/etappe24.gpx", {
-    async:true,
+    async:true
 }).addTo(RouteGroup);
 gpxTrack.on(`loaded`,function(evt){
     //console.log(evt.target.get_distance().toFixed(0))
@@ -81,17 +81,17 @@ gpxTrack.on(`loaded`,function(evt){
 
     let max_hoehe=(evt.target.get_elevation_max().toFixed(0));
     document.getElementById("max_hoehe").innerHTML=max_hoehe;
-    
+
     let anstieg=(evt.target.get_elevation_gain().toFixed(0));
     document.getElementById("anstieg").innerHTML=anstieg;
-    
+
     let abfahrt=(evt.target.get_elevation_loss().toFixed(0));
     document.getElementById("abfahrt").innerHTML=abfahrt;
 
-    let laenge = evt.target.get_distance().toFixed(0);
+    let laenge = (evt.target.get_distance().toFixed(0));
     document.getElementById("laenge").innerHTML=laenge;
     
-    myMap.fitBounds(evt.target.getBounds())
+    myMap.fitBounds(evt.target.getBounds());
 });
 
 myMap.addLayer(RouteGroup);
