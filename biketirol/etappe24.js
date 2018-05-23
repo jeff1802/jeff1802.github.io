@@ -76,7 +76,7 @@ let gpxTrack = new L.GPX("data/etappe24.gpx", {
 }).addTo(RouteGroup);
 gpxTrack.on('loaded',function(evt){
     //console.log(evt.target.get_distance().toFixed(0))
-    let min_hoehe=(evt.target.get_elevation_min().toFixed(0));
+    /*let min_hoehe=(evt.target.get_elevation_min().toFixed(0));
     document.getElementById("min_hoehe").innerHTML=min_hoehe;
 
     let max_hoehe=(evt.target.get_elevation_max().toFixed(0));
@@ -89,7 +89,7 @@ gpxTrack.on('loaded',function(evt){
     document.getElementById("abfahrt").innerHTML=abfahrt;
 
     let laenge = (evt.target.get_distance().toFixed(0));
-    document.getElementById("laenge").innerHTML=laenge;
+    document.getElementById("laenge").innerHTML=laenge;*/
     
     myMap.fitBounds(evt.target.getBounds());
 });
