@@ -1,6 +1,6 @@
 
 let myMap = L.map("map",{
-    fullscreenControl: true
+   // fullscreenControl: true
    });
 const RouteGroup=L.featureGroup().addTo(myMap);
 const routemarkerGroup=L.featureGroup().addTo(myMap);
