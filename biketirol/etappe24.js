@@ -2,8 +2,8 @@
 let myMap = L.map("map",{
     fullscreenControl: true
    });
-const RouteGroup=L.featureGroup();
-const routemarkerGroup=L.featureGroup();
+const RouteGroup=L.featureGroup().addTo(myMap);
+const routemarkerGroup=L.featureGroup().addTo(myMap);
 let myLayers = {
 
     osm : L.tileLayer
@@ -94,7 +94,7 @@ gpxTrack.on('loaded',function(evt){
     myMap.fitBounds(evt.target.getBounds());
 });
 
-myMap.addLayer(RouteGroup);
+//myMap.addLayer(RouteGroup);
 
 L.marker([47.227466,11.375286], {icon: L.icon({
     iconUrl:"images/start-race-2.png",
@@ -108,8 +108,8 @@ L.marker([47.213184,11.213361], {icon: L.icon({
     popupAnchor: [0,-35]})
 }).bindPopup("<a href='https://de.wikipedia.org/wiki/Sellraintal'>Sellraintal</a>").addTo(routemarkerGroup);
 
-myMap.addLayer(routemarkerGroup);
+//myMap.addLayer(routemarkerGroup);
 
-routemarkerGroup.addTo(myMap);
+//routemarkerGroup.addTo(myMap);
 
 //myMap.fitBounds(routemarkerGroup.getBounds());
