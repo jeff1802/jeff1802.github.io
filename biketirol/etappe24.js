@@ -74,7 +74,7 @@ new L.GPX(gpx,
 let gpxTrack = new L.GPX("data/etappe24.gpx", {
     async:true
 }).addTo(RouteGroup);
-gpxTrack.on(`loaded`,function(evt){
+gpxTrack.on('loaded',function(evt){
     //console.log(evt.target.get_distance().toFixed(0))
     let min_hoehe=(evt.target.get_elevation_min().toFixed(0));
     document.getElementById("min_hoehe").innerHTML=min_hoehe;
